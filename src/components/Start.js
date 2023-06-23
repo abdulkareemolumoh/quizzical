@@ -1,11 +1,10 @@
 import React from "react";
 
-export default function Start(props) {
-    
+export default function Start({ handleStartQuiz }) {
   return (
-    <div>
+    <div className="Main-Body">
       <h1>Quizzical</h1>
-      <button onClick={props.handleStartQuiz}>Start Quiz</button>{" "}
+      <button onClick={handleStartQuiz}>Start Quiz</button>{" "}
     </div>
   );
 }

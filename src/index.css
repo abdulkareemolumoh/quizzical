@@ -24,16 +24,32 @@ body {
   justify-content: space-around;
 }
 
-.Answers-Btn {
-  border-radius: 1rem;
-  padding: 0.2rem 1rem;
-  margin: 1rem;
-}
-
 .Check-Answer {
-  background-color: #4D5B9E;
+  background-color: #4d5b9e;
   color: white;
   margin: 0 auto;
   padding: 0.8rem;
   border-radius: 1rem;
+}
+
+.radio-button {
+  display: inline-block;
+  margin: 0.625rem;
+}
+
+.radio-input {
+  display: none;
+}
+
+.radio-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #e2e2e2;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.radio-input:checked + .radio-label {
+  background-color: rgb(15, 190, 73);
 }
