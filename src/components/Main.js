@@ -1,23 +1,44 @@
 import React from "react";
 import { decode } from "html-entities";
 
-export default function Main({ quizData, handleSelectedAnswer }) {
-  const quiz = quizData.map((items, index) => {
+export default function Main(props) {
+  const quiz = props.quizData.map((item, id) => {
+    const isCorrect = item.selectedOption === item.correct_answer;
+    const isNotCorrect = item.selectedOption !== item.correct_answer;
     return (
-      <form key={index}>
-        <p className="Question">{decode(items.question)}</p>
+      <form key={id}>
+        <p className="Question">{decode(item.question)}</p>
         <div className="Answers">
-          {items.answers.map((ans, id) => (
-            <label key={id} className="radio-button">
+          {item.answers.map((answer, answerIndex) => (
+            <label
+              key={answerIndex}
+              className={`radio-button ${
+                props.showResults
+                  ? item.selectedOption === answer
+                    ? isCorrect
+                      ? "correct"
+                      : "incorrect"
+                    : item.correct_answer === answer
+                    ? "correct"
+                    : ""
+                  : ""
+              }`}
+            >
               <input
                 type="radio"
-                onChange={() => handleSelectedAnswer(ans)}
-                name="answer"
-                id={id}
+                name={`question_${id}`}
+                id={`question_${id}_${answerIndex}`}
                 className="radio-input"
+                onClick={() =>
+                  props.handleSelectedOption(answer, item.correct_answer, id)
+                }
+                disabled={props.showResults}
               />
-              <span className="radio-label" htmlFor={ans}>
-                {decode(ans)}
+              <span
+                className="radio-label"
+                htmlFor={`question_${id}_${answerIndex}`}
+              >
+                {decode(answer)}
               </span>
             </label>
           ))}
@@ -29,7 +50,22 @@ export default function Main({ quizData, handleSelectedAnswer }) {
   return (
     <div className="Main-Body">
       {quiz}
-      <button className="Check-Answer">Check-Answer</button>
+
+      <button
+        className="Check-Answer"
+        onClick={props.handleCheckAnswer}
+        disabled={props.showResults}
+      >
+        Check Answer
+      </button>
+      {props.showResults && (
+        <div className="Results">
+          <h2>Quiz Score:</h2>
+          <p>
+            {props.score}/{props.quizData.length}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
