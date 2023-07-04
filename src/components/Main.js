@@ -4,7 +4,6 @@ import { decode } from "html-entities";
 export default function Main(props) {
   const quiz = props.quizData.map((item, id) => {
     const isCorrect = item.selectedOption === item.correct_answer;
-    const isNotCorrect = item.selectedOption !== item.correct_answer;
     return (
       <form key={id}>
         <p className="Question">{decode(item.question)}</p>
@@ -49,21 +48,20 @@ export default function Main(props) {
 
   return (
     <div className="Main-Body">
+      <h1>Quizzical</h1>
       {quiz}
-
-      <button
-        className="Check-Answer"
-        onClick={props.handleCheckAnswer}
-        disabled={props.showResults}
-      >
-        Check Answer
+      <button className="Check-Answer" disabled={props.showResults}>
+        {props.startQuiz ? (
+          <div onClick={props.handleCheckAnswer}>Check Answer</div>
+        ) : (
+          <div onClick={props.restartGame}>Play Again</div>
+        )}
       </button>
       {props.showResults && (
         <div className="Results">
-          <h2>Quiz Score:</h2>
-          <p>
-            {props.score}/{props.quizData.length}
-          </p>
+          <h2>
+            Your Quiz Score: {props.score}/{props.quizData.length}
+          </h2>
         </div>
       )}
     </div>

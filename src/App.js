@@ -5,13 +5,11 @@ import Start from "./components/Start";
 function App() {
   const [quizData, setQuizData] = useState([]);
   const [startQuiz, setStartQuiz] = useState(false);
-  const [selectedOption, setSelectedOption] = useState();
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
 
   const quizAPI = "https://opentdb.com/api.php?amount=5&difficulty=easy";
-
   const fetchQuizData = () => {
     fetch(quizAPI)
       .then((res) => res.json())
@@ -40,7 +38,6 @@ function App() {
   }
 
   function handleSelectedOption(selected, correctAnswer, index) {
-    setSelectedOption(selected);
     setQuizData((prevData) => {
       const newData = [...prevData];
       newData[index].selectedOption = selected;
@@ -62,22 +59,38 @@ function App() {
       ]);
     }
   }
+
   function handleCheckAnswer() {
     setShowResults(true);
+    setStartQuiz(false);
+  }
+
+  function restartGame() {
+    setAnsweredQuestions([]);
+    setScore(0);
+    setShowResults(false);
+    setStartQuiz(true);
+    setQuizData([]);
   }
 
   return (
     <div>
       <header>
-        <Start handleStartQuiz={handleStartQuiz} />
+        <Start
+          handleStartQuiz={handleStartQuiz}
+          startQuiz={startQuiz}
+          showResults={showResults}
+        />
       </header>
       <section>
         <Main
-          quizData={quizData}
-          handleSelectedOption={handleSelectedOption}
-          showResults={showResults}
           handleCheckAnswer={handleCheckAnswer}
+          handleSelectedOption={handleSelectedOption}
           score={score}
+          showResults={showResults}
+          startQuiz={startQuiz}
+          restartGame={restartGame}
+          quizData={quizData}
         />
       </section>
     </div>
