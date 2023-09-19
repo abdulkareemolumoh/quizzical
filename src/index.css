@@ -24,6 +24,7 @@ body {
   margin: 3rem auto 0.5rem auto;
   padding: 0.8rem;
   border-radius: 1rem;
+  text-decoration: none;
 }
 
 .Question {
@@ -81,4 +82,19 @@ body {
 
 .incorrect .radio-label {
   background-color: #f8bcbc !important;
+}
+
+.navbar-container {
+  background-color: #f5f7fb;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.navbar-item {
+  font-size: 1.5rem;
+  text-decoration: none;
+  padding: 0.5rem;
 }

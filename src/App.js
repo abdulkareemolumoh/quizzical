@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Main from "./components/main";
 import Start from "./components/Start";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const [quizData, setQuizData] = useState([]);
@@ -74,26 +75,47 @@ function App() {
   }
 
   return (
-    <div>
+    <BrowserRouter>
       <header>
-        <Start
-          handleStartQuiz={handleStartQuiz}
-          startQuiz={startQuiz}
-          showResults={showResults}
-        />
+        <div class="navbar-container">
+          <Link class="navbar-item" to="/home">
+            Home
+          </Link>
+          <h1>Quizzical</h1>
+          <Link class="navbar-item" to="/quiz">
+            Start Quiz
+          </Link>
+        </div>
       </header>
-      <section>
-        <Main
-          handleCheckAnswer={handleCheckAnswer}
-          handleSelectedOption={handleSelectedOption}
-          score={score}
-          showResults={showResults}
-          startQuiz={startQuiz}
-          restartGame={restartGame}
-          quizData={quizData}
+      <Routes>
+        <Route
+          path="/home"
+          element={
+            <Start
+              handleStartQuiz={handleStartQuiz}
+              startQuiz={startQuiz}
+              showResults={showResults}
+            />
+          }
         />
-      </section>
-    </div>
+        <Route
+          path="/quiz"
+          element={
+            <section>
+              <Main
+                handleCheckAnswer={handleCheckAnswer}
+                handleSelectedOption={handleSelectedOption}
+                score={score}
+                showResults={showResults}
+                startQuiz={startQuiz}
+                restartGame={restartGame}
+                quizData={quizData}
+              />
+            </section>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
