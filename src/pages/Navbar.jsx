@@ -1,19 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import nobglg from "../assets/nobglg.png";
 
 export default function Nav() {
   return (
     <nav>
       <ul className="navbar-container">
-        <Link to="/" className="">
-          <li className="navbar-item">🤖 Quizzical</li>
-        </Link>
-        <Link to="/" className="">
-          <li className="navbar-item">🤖</li>
-        </Link>
-        <Link to="quiz" className="">
-          <li className="navbar-item">Quiz</li>
-        </Link>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "active-navbar-item" : "navbar-item"
+          }
+          to="/"
+        >
+          <li> Quizzical</li>
+        </NavLink>
+        <li className="navbar-item">
+          <img src={nobglg} alt="logo" className="home-image" />
+        </li>
+        <NavLink
+          to="quiz"
+          className={({ isActive }) =>
+            isActive ? "active-navbar-item" : "navbar-item"
+          }
+        >
+          <li>Quiz</li>
+        </NavLink>
       </ul>
     </nav>
   );
