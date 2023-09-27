@@ -8,7 +8,6 @@ import {
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import Quiz from "./pages/Quiz";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const rout = createBrowserRouter(

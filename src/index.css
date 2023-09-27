@@ -85,16 +85,39 @@ body {
 }
 
 .navbar-container {
-  background-color: #f5f7fb;
+  background-color: #082b72;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
+  padding: 1rem 3rem;
+  border-radius: 0.5rem;
 }
 
 .navbar-item {
   font-size: 1.5rem;
   text-decoration: none;
+  color: white;
+  text-decoration: none;
   padding: 0.5rem;
+  list-style: none;
+}
+
+.footer-container {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+}
+
+.footer-container > h2 {
+  font-size: 1rem;
+  text-decoration: none;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+  list-style: none;
 }
