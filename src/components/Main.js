@@ -50,13 +50,19 @@ export default function Main(props) {
     <div className="Main-Body">
       <h1>Quizzical</h1>
       {quiz}
-      <button className="Check-Answer" disabled={props.showResults}>
-        {props.startQuiz ? (
-          <div onClick={props.handleCheckAnswer}>Check Answer</div>
-        ) : (
-          <div onClick={props.restartGame}>Play Again</div>
-        )}
-      </button>
+      {!props.startQuiz && !props.showResults ? (
+        <button className="Check-Answer" onClick={props.handleStartQuiz}>
+          startQuiz
+        </button>
+      ) : !props.startQuiz && props.showResults ? (
+        <button className="Check-Answer" onClick={props.restartGame}>
+          Restart Game
+        </button>
+      ) : (
+        <button className="Check-Answer" onClick={props.handleCheckAnswer}>
+          Submit
+        </button>
+      )}
       {props.showResults && (
         <div className="Results">
           <h2>
