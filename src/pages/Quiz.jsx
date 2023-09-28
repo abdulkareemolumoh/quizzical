@@ -16,19 +16,19 @@ export default function Quiz() {
 
   // const quizData = useRouteLoaderData()
 
-  const fetchQuizData = () => {
-    fetch("https://opentdb.com/api.php?amount=5&difficulty=easy")
-      .then((res) => res.json())
-      .then((data) => {
-        data.results.forEach((item) => {
-          item.answers = getRandomizedAnswers(item);
-        });
-        setQuizData(data.results);
-      })
-      .catch((error) => console.error("Error fetching quiz data:", error));
-  };
-
   useEffect(() => {
+    const fetchQuizData = () => {
+      fetch("https://opentdb.com/api.php?amount=5&difficulty=easy")
+        .then((res) => res.json())
+        .then((data) => {
+          data.results.forEach((item) => {
+            item.answers = getRandomizedAnswers(item);
+          });
+          setQuizData(data.results);
+        })
+        .catch((error) => console.error("Error fetching quiz data:", error));
+    };
+
     if (startQuiz) {
       fetchQuizData();
     }
