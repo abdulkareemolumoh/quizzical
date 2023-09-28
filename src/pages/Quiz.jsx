@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Main from "../components/Main";
-import { getQuizData } from "../getQuizData";
-import { useRouteLoaderData } from "react-router-dom";
+// import { getQuizData } from "../getQuizData";
+// import { useRouteLoaderData } from "react-router-dom";
 
 // export function loader(){
 //   return getQuizData()
