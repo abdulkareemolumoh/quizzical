@@ -2,8 +2,8 @@ import React from "react";
 
 export default function HomePage() {
   return (
-    <div>
-      <h1>🤖 Quizzical</h1>
+    <div className="homepage">
+
       <h1>Welcome to Quizzical: Your Ultimate Quiz Challenge!</h1>
       <h2>Ready to Test Your Knowledge?</h2>
       <h3>

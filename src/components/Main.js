@@ -49,10 +49,10 @@ export default function Main(props) {
   return (
     <div className="Main-Body">
       <h1>Quizzical</h1>
-      {quiz}
+      {props.startQuiz || props.showResults ? quiz : ""}
       {!props.startQuiz && !props.showResults ? (
         <button className="Check-Answer" onClick={props.handleStartQuiz}>
-          startQuiz
+          Start Quiz
         </button>
       ) : !props.startQuiz && props.showResults ? (
         <button className="Check-Answer" onClick={props.restartGame}>

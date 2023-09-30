@@ -7,7 +7,9 @@ export default function Layout() {
   return (
     <div>
       <Header />
-      <Outlet />
+      <main className="Main-Body"> 
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );

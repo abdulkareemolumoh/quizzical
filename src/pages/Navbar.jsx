@@ -12,7 +12,7 @@ export default function Nav() {
           }
           to="/"
         >
-          <li> Quizzical</li>
+          <li> Home</li>
         </NavLink>
         <li className="navbar-item">
           <img src={nobglg} alt="logo" className="home-image" />

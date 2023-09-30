@@ -5,17 +5,26 @@ body {
 
 .Main-Body {
   background-color: #f5f7fb;
-  max-width: 55rem;
-  margin: 5rem auto;
-  padding: 3rem;
+  margin: 1rem 3rem;
+  padding: 3rem 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 2rem;
 }
 
 .Main-Body > h1 {
   color: #293264;
   margin: 1.5rem auto;
+}
+
+.homepage > h1 {
+  text-align: center;
+  padding: 0 0 10rem 0;
+}
+
+.homepage {
+  text-align: justify;
 }
 
 .Start-Btn {
@@ -73,7 +82,7 @@ body {
 }
 
 .radio-input:checked + .radio-label {
-  background-color: #d6dbf5;
+  background-color: #6f79aa;
 }
 
 .correct .radio-label {
@@ -81,7 +90,7 @@ body {
 }
 
 .incorrect .radio-label {
-  background-color: #f8bcbc !important;
+  background-color: #f08888 !important;
 }
 
 .navbar-container {

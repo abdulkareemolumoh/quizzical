@@ -1,48 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Main from "../components/Main";
-// import { getQuizData } from "../getQuizData";
-// import { useRouteLoaderData } from "react-router-dom";
+import { getQuizData } from "../getQuizData";
+import { useLoaderData } from "react-router-dom";
 
-// export function loader(){
-//   return getQuizData()
-// }
+export function loader() {
+  return getQuizData();
+}
 
 export default function Quiz() {
-  const [quizData, setQuizData] = useState([]);
+  const data = useLoaderData();
+
+  const [quizData, setQuizData] = useState(data);
   const [startQuiz, setStartQuiz] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
 
-  // const quizData = useRouteLoaderData()
-
-  useEffect(() => {
-    const fetchQuizData = () => {
-      fetch("https://opentdb.com/api.php?amount=5&difficulty=easy")
-        .then((res) => res.json())
-        .then((data) => {
-          data.results.forEach((item) => {
-            item.answers = getRandomizedAnswers(item);
-          });
-          setQuizData(data.results);
-        })
-        .catch((error) => console.error("Error fetching quiz data:", error));
-    };
-
-    if (startQuiz) {
-      fetchQuizData();
-    }
-  }, [startQuiz]);
-
-  function getRandomizedAnswers(items) {
-    const answers = [...items.incorrect_answers, items.correct_answer];
-    return answers.sort(() => Math.random() - 0.5);
-  }
-
   function handleStartQuiz() {
     setStartQuiz((prevState) => !prevState);
   }
-  console.log(startQuiz);
+
   function handleSelectedOption(selected, correctAnswer, index) {
     setQuizData((prevData) => {
       const newData = [...prevData];
@@ -75,9 +52,8 @@ export default function Quiz() {
     setAnsweredQuestions([]);
     setScore(0);
     setShowResults(false);
-    setStartQuiz((prevState) => !prevState);
-    console.log(startQuiz);
-    setQuizData([]);
+    setStartQuiz(false);
+    setQuizData(data);
   }
 
   return (
