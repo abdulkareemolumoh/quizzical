@@ -14,7 +14,12 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="quiz" element={<Quiz />} loader={quizLoader} />
+        <Route
+          path="quiz"
+          element={<Quiz />}
+          loader={quizLoader}
+          errorElement={<h1>Easy to deal with an error here</h1>}
+        />
       </Route>
     )
   );

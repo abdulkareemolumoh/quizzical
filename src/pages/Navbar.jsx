@@ -3,6 +3,12 @@ import { NavLink } from "react-router-dom";
 import nobglg from "../assets/nobglg.png";
 
 export default function Nav() {
+  // const timer = () => {
+  //   let d = new Date().toString();
+  //   console.log(d);
+  //   return d;
+  // };
+
   return (
     <nav>
       <ul className="navbar-container">
@@ -25,6 +31,7 @@ export default function Nav() {
         >
           <li>Quiz</li>
         </NavLink>
+        {/* <li>{timer()}</li> */}
       </ul>
     </nav>
   );

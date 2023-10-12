@@ -26,6 +26,7 @@ export default function Main(props) {
               <input
                 type="radio"
                 name={`question_${id}`}
+                // required
                 id={`question_${id}_${answerIndex}`}
                 className="radio-input"
                 onClick={() =>
@@ -47,7 +48,7 @@ export default function Main(props) {
   });
 
   return (
-    <div className="Main-Body">
+    <div className="Main-Quiz">
       <h1>Quizzical</h1>
       {props.startQuiz || props.showResults ? quiz : ""}
       {!props.startQuiz && !props.showResults ? (
