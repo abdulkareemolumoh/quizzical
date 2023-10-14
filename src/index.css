@@ -65,7 +65,7 @@ body {
   text-align: center;
   padding: 3rem 0 10rem 0;
   color: yellow;
-  background-image: url("../src/assets/quiz.jpeg");
+  background-image: url("../src/components/assets/quiz.jpeg");
 }
 
 .homepage {
@@ -190,7 +190,7 @@ body {
     text-align: center;
     padding: 3rem 0 10rem 0;
     color: yellow;
-    background-image: url("../src/assets/quiz.jpeg");
+    background-image: url("../src/components/assets/quiz.jpeg");
   }
 
   .homepage {

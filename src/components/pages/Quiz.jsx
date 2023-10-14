@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Main from "../components/Main";
-import { getQuizData } from "../getQuizData";
+import Main from "../Main";
+import { getQuizData } from "../../getQuizData";
 import { useLoaderData } from "react-router-dom";
 
 export function loader() {
