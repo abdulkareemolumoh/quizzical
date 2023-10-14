@@ -5,9 +5,9 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
-import HomePage from "./components/pages/HomePage";
-import Layout from "./components/pages/Layout";
-import Quiz, { loader as quizLoader } from "./components/pages/Quiz";
+import HomePage from "./pages/HomePage";
+import Layout from "./pages/Layout";
+import Quiz, { loader as quizLoader } from "./pages/Quiz";
 import { ThemeProvider } from "./components/ThemeContext";
 
 function App() {
