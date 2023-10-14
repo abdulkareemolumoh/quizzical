@@ -8,6 +8,7 @@ import {
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import Quiz, { loader as quizLoader } from "./pages/Quiz";
+import { ThemeProvider } from "./components/ThemeContext";
 
 function App() {
   const router = createBrowserRouter(
@@ -25,9 +26,11 @@ function App() {
   );
 
   return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
+    <ThemeProvider >
+      <div>
+        <RouterProvider router={router} />
+      </div>
+    </ThemeProvider>
   );
 }
 

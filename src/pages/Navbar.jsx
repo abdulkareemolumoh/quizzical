@@ -1,14 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import nobglg from "../assets/nobglg.png";
+import { useTheme } from "../components/ThemeContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 export default function Nav() {
-  // const timer = () => {
-  //   let d = new Date().toString();
-  //   console.log(d);
-  //   return d;
-  // };
-
+  const { darkMode, toggleTheme } = useTheme();
   return (
     <nav>
       <ul className="navbar-container">
@@ -31,7 +29,13 @@ export default function Nav() {
         >
           <li>Quiz</li>
         </NavLink>
-        {/* <li>{timer()}</li> */}
+        <div onClick={toggleTheme}>
+          {darkMode ? (
+            <FontAwesomeIcon icon={faToggleOff} size="2x" />
+          ) : (<FontAwesomeIcon icon={faToggleOn} size="2x" />
+            
+          )}
+        </div>
       </ul>
     </nav>
   );

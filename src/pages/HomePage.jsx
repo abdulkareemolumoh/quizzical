@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
@@ -75,7 +76,9 @@ export default function HomePage() {
         <br />
         Ready to put your knowledge to the test? Let's get quizzical!
       </h3>
-      <button>Get Started Now or Explore Quizzes</button>
+      <Link to="quiz">
+        <button>Get Started Now or Explore Quizzes</button>
+      </Link>
     </div>
   );
 }
