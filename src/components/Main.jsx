@@ -10,8 +10,14 @@ export default function Main() {
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [quizCategory, setQuizCategory] = useState(9);
   const [difficultyLevel, setDifficultyLevel] = useState("easy");
+  const [selectCounter, setSelectCounter] = useState(0);
 
-  function handleSelectedOption(selected, correctAnswer, index) {
+  function handleSelectedOption(
+    selected,
+    correctAnswer,
+    incorrect_answers,
+    index
+  ) {
     setQuizData((prevData) => {
       const newData = [...prevData];
       newData[index].selectedOption = selected;
@@ -20,6 +26,13 @@ export default function Main() {
       return newData;
     });
 
+    if (selected === correctAnswer || incorrect_answers) {
+      setAnsweredQuestions((prevAnsweredQuestions) => [
+        ...prevAnsweredQuestions,
+        index,
+      ]);
+    }
+
     if (answeredQuestions.includes(index)) {
       // Question has already been answered correctly, return early
       return;
@@ -27,11 +40,12 @@ export default function Main() {
 
     if (selected === correctAnswer) {
       setScore((prevScore) => prevScore + 1);
-      setAnsweredQuestions((prevAnsweredQuestions) => [
-        ...prevAnsweredQuestions,
-        index,
-      ]);
     }
+
+    if (selected === correctAnswer || incorrect_answers) {
+      setSelectCounter((prevState) => prevState + 1);
+    }
+    console.log(selectCounter);
   }
 
   function selectCategory(category) {
@@ -52,13 +66,17 @@ export default function Main() {
         console.error("Error fetching quiz data: ", error);
       });
   }
-console.log(answeredQuestions.length)
+
   function handleCheckAnswer() {
-    if (answeredQuestions === quizData.length) {
+    if (selectCounter === quizData.length) {
       setShowResults(true);
       setStartQuiz((prevState) => !prevState);
     } else {
-      alert("Answer all questions");
+      alert(
+        `Answer all questions!!!\n\n You have ${
+          quizData.length - selectCounter
+        } unanswered questions`
+      );
     }
   }
 
@@ -70,10 +88,11 @@ console.log(answeredQuestions.length)
     setAnsweredQuestions([]);
     setDifficultyLevel("easy");
     setQuizCategory(9);
+    setSelectCounter(0);
   }
 
   const categoryMap = {
-    9: "General Knwoledge",
+    9: "General Knowledge",
     17: "Science & Nature",
     20: "Mythology",
     21: "Sports",
@@ -81,7 +100,7 @@ console.log(answeredQuestions.length)
     23: "History",
     24: "Politics",
     25: "Art",
-    26: "Celebrites",
+    26: "Celebrities",
     27: "Animals",
     28: "Vehicles",
   };
@@ -142,7 +161,12 @@ console.log(answeredQuestions.length)
                 id={`question_${id}_${answerIndex}`}
                 className="radio-input"
                 onClick={() =>
-                  handleSelectedOption(answer, item.correct_answer, id)
+                  handleSelectedOption(
+                    answer,
+                    item.correct_answer,
+                    !item.isCorrect,
+                    id
+                  )
                 }
                 disabled={showResults}
               />
@@ -171,7 +195,7 @@ console.log(answeredQuestions.length)
       {(startQuiz || showResults) && (
         <div className="Quiz-info">
           <h2>Category: {categoryMap[quizCategory]}</h2>
-          <h1>Level: {difficultyLevel}</h1>
+          <h2>Level: {difficultyLevel}</h2>
         </div>
       )}
       {startQuiz || showResults ? quiz : ""}

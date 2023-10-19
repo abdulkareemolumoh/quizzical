@@ -7,10 +7,9 @@ import {
 } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
-import AnyCategoryQuiz from "./pages/AnyCategoryQuiz";
-import { anyCategoryQuizLoader } from "../src/getQuizData";
+import Quiz from "./pages/Quiz";
 import { ThemeProvider } from "./components/ThemeContext";
-import { Quiz } from "./pages/Quiz";
+import QuizLayout from "./pages/QuizLayout";
 import ErrorElement from "./pages/Error";
 
 function App() {
@@ -19,12 +18,8 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
 
-        <Route path="quiz" element={<Quiz />}>
-          <Route
-            index
-            element={<AnyCategoryQuiz />}
-            loader={anyCategoryQuizLoader}
-          />
+        <Route path="quiz" element={<QuizLayout />}>
+          <Route index element={<Quiz />} />
           <Route path="*" element={<ErrorElement />} />
         </Route>
       </Route>

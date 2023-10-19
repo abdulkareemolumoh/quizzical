@@ -1,10 +1,9 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import Main from "../components/Main";
 
-export function Quiz() {
+export default function Quiz() {
   return (
     <div>
-      <Outlet />
+      <Main />
     </div>
   );
 }

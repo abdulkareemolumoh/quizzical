@@ -12,9 +12,6 @@ export async function getQuizData(category, difficulty) {
   data.results.forEach((element) => {
     element.answers = getRandomizedAnswers(element);
   });
-  return data.results;
-}
 
-export function anyCategoryQuizLoader() {
-  return getQuizData();
+  return data.results;
 }
