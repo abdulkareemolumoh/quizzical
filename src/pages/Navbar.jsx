@@ -10,33 +10,35 @@ export default function Nav() {
   return (
     <nav>
       <ul className="navbar-container">
+        <div className="navbar-item1">
         <NavLink
           className={({ isActive }) =>
             isActive ? "active-navbar-item" : "navbar-item"
           }
           to="/"
         >
-          <li> Home</li>
+          <li > Home</li>
         </NavLink>
-        <li className="navbar-item">
+        </div>
+
+        <li className="navbar-item2">
           <img src={nobglg} alt="logo" className="home-image" />
         </li>
-        <div className="navbar-item1">
-          <NavLink
-            to="quiz"
-            className={({ isActive }) =>
-              isActive ? "active-navbar-item" : "navbar-item"
-            }
-          >
-            <li>Quiz</li>
-          </NavLink>
-          <div onClick={toggleTheme}>
-            {darkMode ? (
-              <FontAwesomeIcon icon={faToggleOff} size="2x" />
-            ) : (
-              <FontAwesomeIcon icon={faToggleOn} size="2x" />
-            )}
-          </div>
+
+        <NavLink
+          to="quiz"
+          className={({ isActive }) =>
+            isActive ? "active-navbar-item" : "navbar-item"
+          }
+        >
+          <li className="navbar-item3">Quiz</li>
+        </NavLink>
+        <div onClick={toggleTheme} className="navbar-item4">
+          {darkMode ? (
+            <FontAwesomeIcon icon={faToggleOff} size="2x" />
+          ) : (
+            <FontAwesomeIcon icon={faToggleOn} size="2x" />
+          )}
         </div>
       </ul>
     </nav>

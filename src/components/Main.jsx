@@ -45,7 +45,6 @@ export default function Main() {
     if (selected === correctAnswer || incorrect_answers) {
       setSelectCounter((prevState) => prevState + 1);
     }
-    console.log(selectCounter);
   }
 
   function selectCategory(category) {
@@ -115,7 +114,7 @@ export default function Main() {
           : "inactive-container-item"
       }
     >
-      {level}
+      {level.charAt(0).toUpperCase() + level.slice(1)}
     </button>
   ));
 
@@ -195,7 +194,10 @@ export default function Main() {
       {(startQuiz || showResults) && (
         <div className="Quiz-info">
           <h2>Category: {categoryMap[quizCategory]}</h2>
-          <h2>Level: {difficultyLevel}</h2>
+          <h2>
+            Level:
+            {difficultyLevel.charAt(0).toUpperCase() + difficultyLevel.slice(1)}
+          </h2>
         </div>
       )}
       {startQuiz || showResults ? quiz : ""}
