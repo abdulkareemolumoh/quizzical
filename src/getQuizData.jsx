@@ -1,5 +1,5 @@
 export async function getQuizData(category, difficulty) {
-  const url = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}`;
+  const url = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}`;
 
   const res = await fetch(url);
   const data = await res.json();
