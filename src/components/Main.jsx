@@ -77,8 +77,8 @@ export default function Main() {
     setShowResults(false);
     setScore(0);
     setAnsweredQuestions([]);
-    setDifficultyLevel("easy");
-    setQuizCategory(9);
+    setDifficultyLevel();
+    setQuizCategory();
     setSelectCounter(0);
   }
 
@@ -94,6 +94,7 @@ export default function Main() {
     26: "Celebrities",
     27: "Animals",
     28: "Vehicles",
+    30: "Science: Gadgets",
   };
 
   const difficultyButtons = ["easy", "medium", "hard"].map((level) => (

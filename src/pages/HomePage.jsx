@@ -76,8 +76,8 @@ export default function HomePage() {
         <br />
         Ready to put your knowledge to the test? Let's get quizzical!
       </h3>
-      <Link to="quiz">
-        <button>Get Started Now or Explore Quizzes</button>
+      <Link to="quiz" className="Explore-Button">
+        <button >Explore Quizzes</button>
       </Link>
     </div>
   );
