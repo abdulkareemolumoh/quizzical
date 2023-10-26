@@ -6,8 +6,8 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
-  font-family: "Source Code Pro", monospace;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
 }
 
@@ -27,6 +27,7 @@ body {
   list-style: none;
   color: blue;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .navbar-item1 {
@@ -62,9 +63,14 @@ body {
   padding: 0.5rem;
   list-style: none;
   color: blue;
-  text-decoration: none;
-  box-shadow: 0 5px 5px #888;
+  text-decoration: underline 0.125rem;
+  font-weight: bolder;
+  /* box-shadow: 0 5px 5px #888; */
   /* transform: scale(1.1) translateY(-5px); */
+}
+
+.navbar-item :hover {
+  color: rgb(13, 13, 53);
 }
 
 .dark-mode {
@@ -91,13 +97,29 @@ body {
   justify-content: space-between;
   margin: 1rem 0;
   padding: 1rem 0;
-  border-bottom: solid grey;
+}
+
+.Quiz-Category-Container > * {
+  margin: 0.25rem;
+}
+
+.Quiz-Difficulty-Container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  max-width: 25%;
+}
+
+.Quiz-Difficulty-Container > * {
+  margin: 0.25rem;
 }
 
 .active-container-item {
-  border-top: none;
-  border-bottom: none;
-  background-color: #e2e2e2;
+  border-left: 0.2rem solid;
+  border-right: 0.2rem solid;
+  background-color: #434070;
   padding: 1rem;
 }
 

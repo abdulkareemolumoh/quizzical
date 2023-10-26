@@ -8,15 +8,11 @@ export default function Main() {
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
-  const [quizCategory, setQuizCategory] = useState(9);
-  const [difficultyLevel, setDifficultyLevel] = useState("easy");
+  const [quizCategory, setQuizCategory] = useState();
+  const [difficultyLevel, setDifficultyLevel] = useState();
   const [selectCounter, setSelectCounter] = useState(0);
 
-  function handleSelectedOption(
-    selected,
-    correctAnswer,
-    index
-  ) {
+  function handleSelectedOption(selected, correctAnswer, index) {
     setQuizData((prevData) => {
       const newData = [...prevData];
       newData[index].selectedOption = selected;
@@ -43,14 +39,18 @@ export default function Main() {
   }
 
   function handleStartQuiz(category, difficulty) {
-    getQuizData(category, difficulty)
-      .then((quizData) => {
-        setQuizData(quizData);
-        setStartQuiz(true);
-      })
-      .catch((error) => {
-        console.error("Error fetching quiz data: ", error);
-      });
+    if (category && difficulty) {
+      getQuizData(category, difficulty)
+        .then((quizData) => {
+          setQuizData(quizData);
+          setStartQuiz(true);
+        })
+        .catch((error) => {
+          console.error("Error fetching quiz data: ", error);
+        });
+    } else {
+      alert("Select Category and Choose difficulty");
+    }
   }
 
   function handleCheckAnswer() {
@@ -174,8 +174,10 @@ export default function Main() {
       <h1>Quizzical</h1>
       {!startQuiz && !showResults && (
         <>
+          <h2>Select A Category:</h2>
           <div className="Quiz-Category-Container">{categoryButtons}</div>
-          <div>{difficultyButtons}</div>
+          <h2>Choose Difficulty Level:</h2>
+          <div className="Quiz-Difficulty-Container">{difficultyButtons}</div>
         </>
       )}
       {(startQuiz || showResults) && (
