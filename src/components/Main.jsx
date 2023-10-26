@@ -15,7 +15,6 @@ export default function Main() {
   function handleSelectedOption(
     selected,
     correctAnswer,
-
     index
   ) {
     setQuizData((prevData) => {
