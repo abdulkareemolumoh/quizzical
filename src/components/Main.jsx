@@ -15,7 +15,7 @@ export default function Main() {
   function handleSelectedOption(
     selected,
     correctAnswer,
-    incorrect_answers,
+
     index
   ) {
     setQuizData((prevData) => {
@@ -26,23 +26,11 @@ export default function Main() {
       return newData;
     });
 
-    if (selected === correctAnswer || incorrect_answers) {
+    if (!answeredQuestions.includes(index)) {
       setAnsweredQuestions((prevAnsweredQuestions) => [
         ...prevAnsweredQuestions,
         index,
       ]);
-    }
-
-    if (answeredQuestions.includes(index)) {
-      // Question has already been answered correctly, return early
-      return;
-    }
-
-    if (selected === correctAnswer) {
-      setScore((prevScore) => prevScore + 1);
-    }
-
-    if (selected === correctAnswer || incorrect_answers) {
       setSelectCounter((prevState) => prevState + 1);
     }
   }
@@ -65,8 +53,14 @@ export default function Main() {
         console.error("Error fetching quiz data: ", error);
       });
   }
-
+  console.log(quizData);
   function handleCheckAnswer() {
+    console.log(quizData);
+    for (let i = 0; i < quizData.length; i++) {
+      if (quizData[i].correct) {
+        setScore((prevScore) => prevScore + 1);
+      }
+    }
     if (selectCounter === quizData.length) {
       setShowResults(true);
       setStartQuiz((prevState) => !prevState);
@@ -160,12 +154,7 @@ export default function Main() {
                 id={`question_${id}_${answerIndex}`}
                 className="radio-input"
                 onClick={() =>
-                  handleSelectedOption(
-                    answer,
-                    item.correct_answer,
-                    !item.isCorrect,
-                    id
-                  )
+                  handleSelectedOption(answer, item.correct_answer, id)
                 }
                 disabled={showResults}
               />
@@ -185,7 +174,7 @@ export default function Main() {
   return (
     <div className="Main-Quiz">
       <h1>Quizzical</h1>
-      {!startQuiz && (
+      {!startQuiz && !showResults && (
         <>
           <div className="Quiz-Category-Container">{categoryButtons}</div>
           <div>{difficultyButtons}</div>
@@ -217,6 +206,7 @@ export default function Main() {
           Submit
         </button>
       )}
+
       {showResults && (
         <div className="Results">
           <h2>

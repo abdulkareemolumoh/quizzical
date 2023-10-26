@@ -6,6 +6,7 @@ import { useTheme } from "../components/ThemeContext";
 
 export default function Layout() {
   const { darkMode } = useTheme();
+  
   return (
     <div className={`${darkMode ? "dark-mode" : "light-mode"}`}>
       <Header />

@@ -11,14 +11,14 @@ export default function Nav() {
     <nav>
       <ul className="navbar-container">
         <div className="navbar-item1">
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "active-navbar-item" : "navbar-item"
-          }
-          to="/"
-        >
-          <li > Home</li>
-        </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "active-navbar-item" : "navbar-item"
+            }
+            to="/"
+          >
+            <li> Home</li>
+          </NavLink>
         </div>
 
         <li className="navbar-item2">
