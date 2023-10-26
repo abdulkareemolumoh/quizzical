@@ -53,9 +53,8 @@ export default function Main() {
         console.error("Error fetching quiz data: ", error);
       });
   }
-  console.log(quizData);
+
   function handleCheckAnswer() {
-    console.log(quizData);
     for (let i = 0; i < quizData.length; i++) {
       if (quizData[i].correct) {
         setScore((prevScore) => prevScore + 1);

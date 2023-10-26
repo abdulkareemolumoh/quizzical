@@ -224,14 +224,31 @@ body {
   list-style: none;
 }
 
+
+
+
+
+
+
+
 @media (max-width: 768px) {
+  :root {
+    --background-light: #f5f5f5;
+    --text-color-light: #333;
+    --background-dark: #333;
+    --text-color-dark: #f5f5f5;
+  }
+
   body {
     font-family: "Inter", sans-serif;
     font-family: "Source Code Pro", monospace;
+    margin: 0;
   }
 
+
+  
+  
   .Main-Body {
-    background-color: #f5f7fb;
     margin: 0.25rem 0.75rem;
     padding: 0.5rem 1rem;
     display: flex;
