@@ -54,12 +54,12 @@ export default function Main() {
   }
 
   function handleCheckAnswer() {
-    for (let i = 0; i < quizData.length; i++) {
-      if (quizData[i].correct) {
-        setScore((prevScore) => prevScore + 1);
-      }
-    }
     if (selectCounter === quizData.length) {
+      for (let i = 0; i < quizData.length; i++) {
+        if (quizData[i].correct) {
+          setScore((prevScore) => prevScore + 1);
+        }
+      }
       setShowResults(true);
       setStartQuiz((prevState) => !prevState);
     } else {
@@ -97,27 +97,13 @@ export default function Main() {
     30: "Science: Gadgets",
   };
 
-  const difficultyButtons = ["easy", "medium", "hard"].map((level) => (
-    <button
-      key={level}
-      onClick={() => selectDifficulty(level)}
-      className={
-        difficultyLevel === level
-          ? "active-container-item"
-          : "inactive-container-item"
-      }
-    >
-      {level.charAt(0).toUpperCase() + level.slice(1)}
-    </button>
-  ));
-
   const categoryButtons = Object.entries(categoryMap).map(([key, value]) => (
     <button
       key={key}
       className={
         quizCategory === Number(key)
-          ? "active-container-item"
-          : "inactive-container-item"
+          ? "p-1.5 m-1 bg-blue-500 hover:bg-blue-400 gap-t  rounded-lg "
+          : "p-1.5 m-1 bg-gray-500 hover:bg-gray-400 gap-5 rounded-lg"
       }
       onClick={() => selectCategory(Number(key))}
     >
@@ -125,45 +111,59 @@ export default function Main() {
     </button>
   ));
 
+  const difficultyButtons = ["easy", "medium", "hard"].map((level) => (
+    <button
+      key={level}
+      onClick={() => selectDifficulty(level)}
+      className={
+        difficultyLevel === level
+          ? "p-1.5 m-1 bg-blue-500 hover:bg-blue-400 gap-t  border border-gray-700 rounded-lg"
+          : "p-1.5 m-1 bg-gray-500 hover:bg-gray-400 gap-5 rounded-lg"
+      }
+    >
+      {level.charAt(0).toUpperCase() + level.slice(1)}
+    </button>
+  ));
+
   const quiz = quizData.map((item, id) => {
     const isCorrect = item.selectedOption === item.correct_answer;
     return (
-      <form key={id}>
-        <p className="Question">{decode(item.question)}</p>
-        <div className="Answers">
+      <form>
+        <p className="p-3 text-lg font-semibold">
+          {decode(item.question)} key={id}
+        </p>
+        <div className="flex flex-wrap justify-between items-center gap-y-8 m-2">
           {item.answers.map((answer, answerIndex) => (
-            <label
-              key={answerIndex}
-              className={`radio-button ${
-                showResults
-                  ? item.selectedOption === answer
-                    ? isCorrect
-                      ? "correct"
-                      : "incorrect"
-                    : item.correct_answer === answer
-                    ? "correct"
-                    : ""
-                  : ""
-              }`}
-            >
+            <div>
               <input
                 type="radio"
                 name={`question_${id}`}
                 required
                 id={`question_${id}_${answerIndex}`}
-                className="radio-input"
+                className="appearance-none peer "
                 onClick={() =>
                   handleSelectedOption(answer, item.correct_answer, id)
                 }
                 disabled={showResults}
               />
-              <span
-                className="radio-label"
+              <label
                 htmlFor={`question_${id}_${answerIndex}`}
+                key={answerIndex}
+                className={`cursor-pointer bg-gray-500 hover:bg-gray-400 peer-checked:bg-green-500 rounded-3xl px-4 py-2 ${
+                  showResults
+                    ? item.selectedOption === answer
+                      ? isCorrect
+                        ? " !bg-green-500 "
+                        : " !bg-red-500"
+                      : item.correct_answer === answer
+                      ? " !bg-green-500"
+                      : ""
+                    : ""
+                }`}
               >
                 {decode(answer)}
-              </span>
-            </label>
+              </label>
+            </div>
           ))}
         </div>
       </form>
@@ -171,18 +171,18 @@ export default function Main() {
   });
 
   return (
-    <div className="Main-Quiz">
-      <h1>Quizzical</h1>
+    <div className="my-8 h-full ">
+      <h1 className="text-center font-extrabold text-3xl p-4">Quizzical</h1>
       {!startQuiz && !showResults && (
         <>
-          <h2>Select A Category:</h2>
-          <div className="Quiz-Category-Container">{categoryButtons}</div>
-          <h2>Choose Difficulty Level:</h2>
-          <div className="Quiz-Difficulty-Container">{difficultyButtons}</div>
+          <h2 className="font-bold py-4">Select A Category:</h2>
+          <div className="p-4">{categoryButtons}</div>
+          <h2 className="font-bold py-4">Choose Difficulty Level:</h2>
+          <div className="p-4">{difficultyButtons}</div>
         </>
       )}
       {(startQuiz || showResults) && (
-        <div className="Quiz-info">
+        <div className="p-8 flex justify-between font-bold text-lg">
           <h2>Category: {categoryMap[quizCategory]}</h2>
           <h2>
             Level:
@@ -190,26 +190,32 @@ export default function Main() {
           </h2>
         </div>
       )}
-      {startQuiz || showResults ? quiz : ""}
+      {startQuiz || showResults ? quiz : null}
       {!startQuiz && !showResults ? (
         <button
-          className="Check-Answer"
+          className="flex mx-auto mt-16 px-4 py-2 bg-blue-500 hover:bg-blue-300 gap-5 rounded-lg"
           onClick={() => handleStartQuiz(quizCategory, difficultyLevel)}
+          disabled={startQuiz}
         >
           Start Quiz
         </button>
       ) : !startQuiz && showResults ? (
-        <button className="Check-Answer" onClick={restartGame}>
+        <button
+          className="flex mx-auto mt-16 px-4 py-2 bg-blue-500 hover:bg-blue-300 gap-5 rounded-lg"
+          onClick={restartGame}
+        >
           Restart Game
         </button>
       ) : (
-        <button className="Check-Answer" onClick={handleCheckAnswer}>
+        <button
+          className="flex mx-auto mt-16 px-4 py-2 bg-blue-500 hover:bg-blue-300 gap-5 rounded-lg"
+          onClick={handleCheckAnswer}
+        >
           Submit
         </button>
       )}
-
       {showResults && (
-        <div className="Results">
+        <div className="font-bold text-2xl my-4">
           <h2>
             Your Quiz Score: {score}/{quizData.length}
           </h2>

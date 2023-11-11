@@ -6,11 +6,13 @@ import { useTheme } from "../components/ThemeContext";
 
 export default function Layout() {
   const { darkMode } = useTheme();
-  
+
   return (
-    <div className={`${darkMode ? "dark-mode" : "light-mode"}`}>
+    <div
+      className={` ${darkMode ? "bg-black text-white" : "bg-white text-black"}`}
+    >
       <Header />
-      <main className={"Main-Body"}>
+      <main className="px-8 pt-8 pb-44 ">
         <Outlet />
       </main>
       <Footer />

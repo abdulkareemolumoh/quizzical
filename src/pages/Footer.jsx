@@ -9,23 +9,31 @@ import {
 export default function Footer() {
   return (
     <div>
-      <footer className="footer-container">
-        <div className="footer-contact">
-          <a href="https://github.com/abdulkareemolumoh" target="_">
-            <FontAwesomeIcon icon={faGithub} size="2xl" color="white" />
+      <footer className="flex justify-between px-8 py-6 bg-black  border-t-[0.0125rem] border-blue-800 bottom-0  w-full">
+        <div className="flex justify-between items-center">
+          <a
+            href="https://github.com/abdulkareemolumoh"
+            target="_"
+            className="px-4"
+          >
+            <FontAwesomeIcon icon={faGithub} size="xl" color="white" />
           </a>
-          <a href="https://www.linkedin.com/in/abdulkareemolumoh/" target="_">
-            <FontAwesomeIcon icon={faLinkedin} size="2xl" color="white" />
+          <a
+            href="https://www.linkedin.com/in/abdulkareemolumoh/"
+            target="_"
+            className="px-4"
+          >
+            <FontAwesomeIcon icon={faLinkedin} size="xl" color="white" />
           </a>
-          <a href="https://wa.link/5pupln" target="_">
-            <FontAwesomeIcon icon={faWhatsapp} size="2xl" color="white" />
+          <a href="https://wa.link/5pupln" target="_" className="">
+            <FontAwesomeIcon icon={faWhatsapp} size="xl" color="white" />
           </a>
-        </div >
+        </div>
 
-        <div className="footer-copyright">
-          <h2>🤖</h2>
-          <h2>Copyright 2023</h2>
-        </div >
+        <div className="flex justify-around">
+          <h2 className="">🤖</h2>
+          <h2 className="text-red-500 text-lg mx-2">Copyright 2023</h2>
+        </div>
       </footer>
     </div>
   );
