@@ -12,7 +12,7 @@ export default function Layout() {
       className={` ${darkMode ? "bg-black text-white" : "bg-white text-black"}`}
     >
       <Header />
-      <main className="px-8 pt-8 pb-44 ">
+      <main className="px-8 sm:px-24 pt-8  h-full ">
         <Outlet />
       </main>
       <Footer />

@@ -11,7 +11,7 @@ export default function Nav() {
   return (
     <nav>
       <ul
-        className={`flex justify-between items-center px-4 w-full border-b-[0.0125rem] border-blue-500 font-medium text-2xl fixed ${
+        className={`flex justify-between items-center px-4 sm:px-8 w-full border-b-[0.0125rem] border-blue-500 font-medium text-2xl sm:text-4xl fixed ${
           darkMode ? "bg-black" : "bg-white"
         }`}
       >

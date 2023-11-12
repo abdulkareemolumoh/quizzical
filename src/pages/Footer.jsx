@@ -9,7 +9,7 @@ import {
 export default function Footer() {
   return (
     <div>
-      <footer className="flex justify-between px-8 py-6 bg-black  border-t-[0.0125rem] border-blue-800 bottom-0  w-full">
+      <footer className="flex justify-between px-8 py-6 bg-black  border-t-[0.0125rem] border-blue-800  w-full">
         <div className="flex justify-between items-center">
           <a
             href="https://github.com/abdulkareemolumoh"
@@ -25,7 +25,7 @@ export default function Footer() {
           >
             <FontAwesomeIcon icon={faLinkedin} size="xl" color="white" />
           </a>
-          <a href="https://wa.link/5pupln" target="_" className="">
+          <a href="https://wa.link/5pupln" target="_" className="px-4">
             <FontAwesomeIcon icon={faWhatsapp} size="xl" color="white" />
           </a>
         </div>
