@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "antd";
 
-const contentStyle = {
-  height: "160px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  // background: "#364d79",
-};
+// const contentStyle = {
+//   // height: "20rem",
+//   // color: "#fff",
+//   // lineHeight: "20rem",
+//   // textAlign: "center",
+//   // background: "#364d79",
+// };
 
 export default function HomePage() {
   return (
@@ -16,7 +16,9 @@ export default function HomePage() {
       <h1 className="bg-[url('assets/quiz.jpeg')] text-yellow-500 hover:text-white bg-right-top p-32 rounded-lg font-extrabold text-4xl my-8">
         Welcome to Quizzical: Your Ultimate Quiz Challenge!
       </h1>
-      <h2 className="text-lg font-bold my-2">Ready to Test Your Knowledge?</h2>
+      <h2 className="text-lg sm:text-3xl font-bold my-2">
+        Ready to Test Your Knowledge?
+      </h2>
       <h3 className="font-semibold my-2">
         Quizzical is your go-to destination for fun, challenging, and
         educational quizzes that cover a wide range of topics. Whether you're a
@@ -24,37 +26,39 @@ export default function HomePage() {
         fun way to pass the time, we've got quizzes that will keep you
         entertained and engaged.
       </h3>
-      <h2 className="text-lg font-bold my-2">Why Choose Quizzical?</h2>
+      <h2 className="text-lg sm:text-3xl font-bold my-2">
+        Why Choose Quizzical?
+      </h2>
       <Carousel autoplay>
-        <div >
-          <h3 style={contentStyle} className=" bg-[url('assets/quiz.jpeg')]">
+        <div>
+          <h3 className="bg-[url('assets/Diverse.jpeg')]  bg-top text-right text-2xl sm:text-4xl font-extrabold text-gray-800 p-16 sm:p-24 ">
             Diverse Quiz Categories: Explore a variety of quiz categories, from
             general knowledge and pop culture to sports, history, and more. We
             have something for everyone!
           </h3>
         </div>
         <div>
-          <h3 style={contentStyle}>
+          <h3 className=" bg-[url('assets/Challange.jpeg')]  bg-top text-right text-2xl sm:text-4xl font-extrabold text-black  p-16 sm:p-24">
             Challenge Yourself: Test your knowledge and challenge yourself with
             quizzes of varying difficulty levels. Are you a beginner or an
             expert? Find quizzes that match your skill level.
           </h3>
         </div>
         <div>
-          <h3 style={contentStyle}>
+          <h3 className=" bg-[url('assets/Compete.jpeg')]  bg-top text-right text-2xl sm:text-4xl font-extrabold text-black  p-16 sm:p-24">
             Compete with Friends: Invite your friends to join you in friendly
             competition. See who can score the highest on quizzes and claim
             bragging rights.
           </h3>
         </div>
         <div>
-          <h3 style={contentStyle}>
+          <h3 className=" bg-[url('assets/Learn.jpeg')]  bg-top text-right text-2xl sm:text-4xl font-extrabold text-black  p-16 sm:p-24">
             Learn While Having Fun: Quizzical isn't just about fun; it's also an
             opportunity to learn new facts, trivia, and interesting information.
           </h3>
         </div>
         <div>
-          <h3 style={contentStyle}>
+          <h3 className=" bg-[url('assets/userFriendly.jpeg')]  bg-cover text-right text-2xl sm:text-4xl font-extrabold text-black  p-16 sm:p-24">
             User-Friendly Interface: Our user-friendly interface makes it easy
             to browse and select quizzes. You can start answering questions in
             seconds.
@@ -62,62 +66,45 @@ export default function HomePage() {
         </div>
       </Carousel>
 
-      {/* <ul className="font-semibold my-2">
-        <li className="m-2">
-          Diverse Quiz Categories: Explore a variety of quiz categories, from
-          general knowledge and pop culture to sports, history, and more. We
-          have something for everyone!
-        </li>
-        <li className="m-2">
-          Challenge Yourself: Test your knowledge and challenge yourself with
-          quizzes of varying difficulty levels. Are you a beginner or an expert?
-          Find quizzes that match your skill level.
-        </li>
-        <li className="m-2">
-          Compete with Friends: Invite your friends to join you in friendly
-          competition. See who can score the highest on quizzes and claim
-          bragging rights.
-        </li>
-        <li className="m-2">
-          Learn While Having Fun: Quizzical isn't just about fun; it's also an
-          opportunity to learn new facts, trivia, and interesting information.
-        </li>
-        <li className="m-2">
-          User-Friendly Interface: Our user-friendly interface makes it easy to
-          browse and select quizzes. You can start answering questions in
-          seconds.
-        </li>
-      </ul> */}
-
-      <h2 className="text-lg font-bold my-2">Get Started Today!</h2>
+      <h2 className="text-lg sm:text-3xl font-bold my-4 sm:my-2">
+        Get Started Today!
+      </h2>
       <h3 className="font-semibold my-2">
         Ready to embark on your quiz journey? It's easy to get started:
       </h3>
-      <ol>
+      <ol className="font-semibold my-2 ">
         <li>
-          Browse Our Quizzes: Explore our extensive library of quizzes and pick
-          the topics that interest you the most.
+          <span className="font-extrabold">Browse Our Quizzes:</span> Explore
+          our extensive library of quizzes and pick the topics that interest you
+          the most.
         </li>
         <li>
-          Answer Questions: Dive into the world of quizzes by answering
-          questions, making choices, and seeing how well you do.
+          <span className="font-extrabold">Answer Questions: D</span>ive into
+          the world of quizzes by answering questions, making choices, and
+          seeing how well you do.
         </li>
         <li>
-          Create an Account: Sign up for a free Quizzical account to keep track
-          of your progress, compete with friends, and unlock special features.
+          <span className="font-extrabold">Create an Account: </span>Sign up for
+          a free Quizzical account to keep track of your progress, compete with
+          friends, and unlock special features.
         </li>
         <li>
-          Share Your Results: Share your quiz results with friends on social
-          media and challenge them to beat your score.
+          <span className="font-extrabold">Share Your Results:</span> Share your
+          quiz results with friends on social media and challenge them to beat
+          your score.
         </li>
       </ol>
-      <h2 className="text-lg font-bold my-2">Join Our Quizzical Community</h2>
+      <h2 className="text-lg sm:text-3xl font-bold my-4 sm:my-2">
+        Join Our Quizzical Community
+      </h2>
       <h3 className="font-semibold my-2">
         Quizzical isn't just a quiz platform; it's a community of knowledge
         seekers and quiz enthusiasts. Connect with fellow users, share your
         favorite quizzes, and discover new ones together.
       </h3>
-      <h2 className="text-lg font-bold my-2">Stay Tuned for Updates</h2>
+      <h2 className="text-lg sm:text-3xl font-bold my-4 sm:my-2">
+        Stay Tuned for Updates
+      </h2>
       <h3 className="font-semibold my-2">
         We're constantly adding new quizzes and features to enhance your
         Quizzical experience. Be sure to follow us on social media and subscribe

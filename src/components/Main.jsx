@@ -11,6 +11,7 @@ export default function Main() {
   const [quizCategory, setQuizCategory] = useState();
   const [difficultyLevel, setDifficultyLevel] = useState();
   const [selectCounter, setSelectCounter] = useState(0);
+  
 
   function handleSelectedOption(selected, correctAnswer, index) {
     setQuizData((prevData) => {
@@ -128,13 +129,13 @@ export default function Main() {
   const quiz = quizData.map((item, id) => {
     const isCorrect = item.selectedOption === item.correct_answer;
     return (
-      <form>
+      <div key={id}>
         <p className="p-3 sm:p-8 text-xl sm:text-2xl font-semibold">
-          {decode(item.question)} key={id}
+          {decode(item.question)}
         </p>
         <div className="flex flex-wrap justify-between sm:justify-evenly items-center gap-y-8 m-2">
           {item.answers.map((answer, answerIndex) => (
-            <div>
+            <div key={answerIndex}>
               <input
                 type="radio"
                 name={`question_${id}`}
@@ -148,7 +149,6 @@ export default function Main() {
               />
               <label
                 htmlFor={`question_${id}_${answerIndex}`}
-                key={answerIndex}
                 className={`cursor-pointer bg-gray-500 hover:bg-gray-400 peer-checked:bg-green-500 rounded-3xl px-4 py-2 sm:text-xl ${
                   showResults
                     ? item.selectedOption === answer
@@ -166,7 +166,7 @@ export default function Main() {
             </div>
           ))}
         </div>
-      </form>
+      </div>
     );
   });
 
@@ -177,7 +177,9 @@ export default function Main() {
         <>
           <h2 className="font-bold py-4 sm:text-xl">Select A Category:</h2>
           <div className="p-4">{categoryButtons}</div>
-          <h2 className="font-bold py-4 sm:text-xl">Choose Difficulty Level:</h2>
+          <h2 className="font-bold py-4 sm:text-xl">
+            Choose Difficulty Level:
+          </h2>
           <div className="p-4">{difficultyButtons}</div>
         </>
       )}
