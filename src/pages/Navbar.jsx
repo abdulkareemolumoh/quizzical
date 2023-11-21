@@ -11,11 +11,11 @@ export default function Nav() {
   return (
     <nav>
       <ul
-        className={`flex justify-between items-center px-4 sm:px-8 w-full border-b-[0.0125rem] border-blue-500 font-medium text-2xl sm:text-4xl fixed z-50 ${
+        className={`flex justify-between items-center px-4 sm:px-8 w-full border-b-[0.0125rem] border-blue-500 font-medium text-2xl sm:text-4xl fixed z-20 ${
           darkMode ? "bg-black" : "bg-white"
         }`}
       >
-        <div >
+        <div>
           <NavLink
             className={({ isActive }) =>
               isActive
@@ -40,13 +40,13 @@ export default function Nav() {
                 : "font-bold text-blue-500 hover:text-blue-300"
             }
           >
-            <li className="">Quiz</li>
+            <li className="mr-4">Quiz</li>
           </NavLink>
           <div onClick={toggleTheme} className="mx-4">
             {darkMode ? (
-              <FontAwesomeIcon icon={faToggleOff} size="2x" />
+              <FontAwesomeIcon icon={faToggleOff} size="xl" />
             ) : (
-              <FontAwesomeIcon icon={faToggleOn} size="2x" />
+              <FontAwesomeIcon icon={faToggleOn} size="xl" />
             )}
           </div>
         </div>

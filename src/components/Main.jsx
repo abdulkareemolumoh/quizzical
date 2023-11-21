@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { decode } from "html-entities";
 import { getQuizData } from "../getQuizData";
+import { useAuth } from "./AuthContext";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
+import { NavLink } from "react-router-dom";
 
 export default function Main() {
   const [quizData, setQuizData] = useState([]);
@@ -11,7 +15,8 @@ export default function Main() {
   const [quizCategory, setQuizCategory] = useState();
   const [difficultyLevel, setDifficultyLevel] = useState();
   const [selectCounter, setSelectCounter] = useState(0);
-  
+
+  const { logout, userData } = useAuth();
 
   function handleSelectedOption(selected, correctAnswer, index) {
     setQuizData((prevData) => {
@@ -170,8 +175,56 @@ export default function Main() {
     );
   });
 
+  const handleLogOut = () => {
+    logout();
+  };
+
+  const items = [
+    {
+      label: <NavLink to="/profilePage">Profile Page</NavLink>,
+      key: "0",
+    },
+    {
+      label: (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.aliyun.com"
+        >
+          2nd menu item
+        </a>
+      ),
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <h3 onClick={handleLogOut}>Log Out</h3>,
+      key: "3",
+      disabled: false,
+    },
+  ];
+
   return (
     <div className="mt-12 min-h-screen ">
+      <div className="flex justify-end text-sm">
+        <h3>{`Hello ${userData ? userData.firstName : ""}`}</h3>
+        <h2 className="ml-2">
+          <Dropdown
+            menu={{
+              items,
+            }}
+          >
+            {/* <a onClick={(e) => e.preventDefault()}> */}
+            <Space>
+              Profile
+              <DownOutlined />
+            </Space>
+            {/* </a> */}
+          </Dropdown>
+        </h2>
+      </div>
       <h1 className="text-center font-extrabold text-3xl p-4">Quizzical</h1>
       {!startQuiz && !showResults && (
         <>
