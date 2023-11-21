@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
     return JSON.parse(localStorage.getItem("user"));
   });
   const [loggedIn, setLoggedIn] = useState(user ? true : false);
-  const [userData, setUserData] = useState(user.userData);
+  const [userData, setUserData] = useState(user ? user.userData : null);
 
   useEffect(() => {
     const fetchUserData = async () => {

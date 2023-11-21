@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { db, storage } from "../components/Firebase";
+import React, { useState } from "react";
+import { db } from "../components/Firebase";
 import { useAuth } from "../components/AuthContext";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
 import Avatar from "../assets/Avatar.jpg";
 
 export default function ProfilePage() {
   const { user, userData, setUserData } = useAuth();
-
   const [formData, setFormData] = useState({
     firstName: "",
     surname: "",
@@ -19,51 +13,11 @@ export default function ProfilePage() {
     phoneNumber: "",
     gender: "",
   });
+
   const [disableToggle, setDisableToggle] = React.useState(
     userData ? true : false
   );
   // const [profilePicture, setProfilePicture] = React.useState(null);
-  const [file, setFile] = React.useState(null);
-  const [perc, setPerc] = React.useState(null);
-
-  useEffect(() => {
-    const uploadFile = () => {
-      const name = new Date().getTime() + file.name;
-
-      console.log(name);
-      const storageRef = ref(storage, file.name);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          setPerc(progress);
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setFormData((prev) => ({ ...prev, img: downloadURL }));
-          });
-        }
-      );
-    };
-    file && uploadFile();
-  }, [file]);
 
   const handleChange = (e) => {
     if (!userData) {
@@ -73,96 +27,51 @@ export default function ProfilePage() {
     }
   };
 
-  const handleInputChange = (e) => {
-    const selectedFile = e.target.files[0];
-
-    if (selectedFile) {
-      // If a file is selected, set it in the state
-      setFile(URL.createObjectURL(selectedFile));
-    } else {
-      // If no file is selected, set it to the default Avatar
-      setFile(null); // or set it to the URL of your default Avatar
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const selectedFile = e.target.files[0];
+  //   const storageRef = firebase.storage().ref();
+  //   const fileRef = storageRef.child(selectedFile.name);
+  //   fileRef.put(selectedFile).then((snapshot) => {
+  //     fileRef.getDownloadURL().then((url) => {
+  //       setProfilePicture(url);
+  //     });
+  //   });
+  // };
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
 
-    setDoc(doc(db, "userData", user.uid), {
-      ...formData,
-    });
+    await setDoc(doc(db, "userData", user.uid), { ...formData });
 
     const docRef = doc(db, "userData", user.uid);
     const docSnap = await getDoc(docRef);
     const userData = docSnap.exists() ? docSnap.data() : null;
-
-    // getDownloadURL(ref(storage, `images/${user.uid}`))
-    //   .then((url) => {
-    //     setProfilePicture(url);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.message);
-    //   });
-
     setUserData(userData);
-
-    alert("Image uploaded");
 
     setDisableToggle(true);
   };
 
-  const handleEditProfile = (e) => {
+  function handleEditProfile(e) {
     setDisableToggle(false);
     handleChange(e);
-  };
+  }
 
-  const handleUpdateProfile = async (e) => {
+  async function handleUpdateProfile(e) {
     e.preventDefault();
     if (userData) {
       const userDataRef = doc(db, "userData", user.uid);
       await updateDoc(userDataRef, { ...formData });
 
-      // try {
-      //   // Upload the image to Firebase Storage
-      //   const imageRef = ref(storage, `images/${user.uid}`);
-      //   await uploadBytes(imageRef, profilePicture);
-
-      //   // Get the download URL of the uploaded image
-      //   const downloadURL = await getDownloadURL(imageRef);
-
-      //   // Update the Firestore document with the download URL
-      //   await setDoc(doc(db, "userData", user.uid), {
-      //     ...formData,
-      //     profilePicture: downloadURL,
-      //   });
-
-      //   // Fetch and set user data
-      //   const docRef = doc(db, "userData", user.uid);
-      //   const docSnap = await getDoc(docRef);
-      //   const userData = docSnap.exists() ? docSnap.data() : null;
-      //   setUserData(userData);
-
-      //   // Show an alert after successful image upload
-      //   alert("Image uploaded");
-
-      //   // Disable form editing
-      //   setDisableToggle(true);
-      // } catch (error) {
-      //   console.error("Error creating profile:", error);
-      // }
-    }
-
-    const docRef = doc(db, "userData", user.uid);
-    try {
+      const docRef = doc(db, "userData", user.uid);
       const docSnap = await getDoc(docRef);
       const userData = docSnap.exists() ? docSnap.data() : null;
       setUserData(userData);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
+
+      setDisableToggle(true);
     }
 
     setDisableToggle(true);
-  };
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
@@ -171,17 +80,24 @@ export default function ProfilePage() {
         onSubmit={handleCreateProfile}
         className="flex flex-col items-end p-4 rounded-lg"
       >
-        <img src={file ?? Avatar} alt="profilePic" className="rounded-full w-40" />
+        {/* <img src={Avatar} alt="profilePic" className="rounded-full w-40" />
+        <label>
+          <input
+            type="image"
+            src={Avatar}
+            alt="profilePicture"
+            className="rounded-full w-40"
+          />
+        </label>
         <label>
           <input
             type="file"
             name="profilePicture"
             accept="image/*"
-            onChange={handleInputChange}
+            // onClick={}
             disabled={disableToggle}
-          />
-        </label>
-
+          /> */}
+        {/* </label> */}
         <label className="m-2 text-xl">
           First Name:
           <input
@@ -200,7 +116,6 @@ export default function ProfilePage() {
             disabled={disableToggle}
           />
         </label>
-
         <label className="m-2 text-xl">
           Surname:
           <input
@@ -219,7 +134,6 @@ export default function ProfilePage() {
             disabled={disableToggle}
           />
         </label>
-
         <label className="m-2 text-xl">
           Email:
           <input
@@ -238,7 +152,6 @@ export default function ProfilePage() {
             disabled={disableToggle}
           />
         </label>
-
         <label className="m-2 p-2 text-xl">
           Phone Number:
           <input
@@ -280,7 +193,6 @@ export default function ProfilePage() {
             <option value="Prefe not to say" />
           </datalist>
         </label>
-
         <div className="flex justify-center m-auto gap-x-4">
           {!userData && (
             <button
