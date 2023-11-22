@@ -1,8 +1,9 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { db } from "../components/Firebase";
+import { db, storage } from "../components/Firebase";
 import { useAuth } from "../components/AuthContext";
 import Avatar from "../assets/Avatar.jpg";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function ProfilePage() {
   const { user, userData, setUserData } = useAuth();
@@ -14,63 +15,84 @@ export default function ProfilePage() {
     gender: "",
   });
 
-  const [disableToggle, setDisableToggle] = React.useState(
-    userData ? true : false
-  );
-  // const [profilePicture, setProfilePicture] = React.useState(null);
+  const [disable, setDisable] = React.useState(true);
+  const [profilePicture, setProfilePicture] = React.useState(Avatar);
 
   const handleChange = (e) => {
     if (!userData) {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     } else {
-      setFormData({ ...userData, [e.target.name]: e.target.value });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
 
-  // const handleImageChange = (e) => {
-  //   const selectedFile = e.target.files[0];
-  //   const storageRef = firebase.storage().ref();
-  //   const fileRef = storageRef.child(selectedFile.name);
-  //   fileRef.put(selectedFile).then((snapshot) => {
-  //     fileRef.getDownloadURL().then((url) => {
-  //       setProfilePicture(url);
-  //     });
-  //   });
-  // };
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setProfilePicture(selectedFile);
+    } else {
+      setProfilePicture(userData.picture);
+    }
+  };
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
 
-    await setDoc(doc(db, "userData", user.uid), { ...formData });
+    const profileImageRef = ref(
+      storage,
+      `profileImages/${profilePicture.name}`
+    );
+    uploadBytes(profileImageRef, profilePicture).then(async (snapshot) => {
+      const fullPath = snapshot.metadata.fullPath;
+      const downloadURL = await getDownloadURL(ref(storage, fullPath));
 
-    const docRef = doc(db, "userData", user.uid);
-    const docSnap = await getDoc(docRef);
-    const userData = docSnap.exists() ? docSnap.data() : null;
-    setUserData(userData);
-
-    setDisableToggle(true);
-  };
-
-  function handleEditProfile(e) {
-    setDisableToggle(false);
-    handleChange(e);
-  }
-
-  async function handleUpdateProfile(e) {
-    e.preventDefault();
-    if (userData) {
-      const userDataRef = doc(db, "userData", user.uid);
-      await updateDoc(userDataRef, { ...formData });
+      await setDoc(doc(db, "userData", user.uid), {
+        ...formData,
+        picture: downloadURL,
+      });
 
       const docRef = doc(db, "userData", user.uid);
       const docSnap = await getDoc(docRef);
       const userData = docSnap.exists() ? docSnap.data() : null;
       setUserData(userData);
+    });
 
-      setDisableToggle(true);
+    setDisable(true);
+  };
+
+  function handleEditProfile(e) {
+    setDisable(false);
+    if (userData) {
+      setFormData(userData);
+      setProfilePicture(userData.picture);
+    }
+  }
+
+  async function handleUpdateProfile(e) {
+    e.preventDefault();
+    if (profilePicture !== userData.picture) {
+      const profileImageRef = ref(
+        storage,
+        `profileImages/${profilePicture.name}`
+      );
+      await uploadBytes(profileImageRef, profilePicture);
+      const fullPath = profileImageRef.fullPath;
+      const downloadURL = await getDownloadURL(ref(storage, fullPath));
+      await updateDoc(doc(db, "userData", user.uid), {
+        ...formData,
+        picture: downloadURL,
+      });
+    } else {
+      await updateDoc(doc(db, "userData", user.uid), { ...formData });
     }
 
-    setDisableToggle(true);
+    const docRef = doc(db, "userData", user.uid);
+    const docSnap = await getDoc(docRef);
+    const updatedUserData = docSnap.exists() ? docSnap.data() : null;
+
+    setUserData(updatedUserData);
+
+    setDisable(true);
   }
 
   return (
@@ -80,94 +102,112 @@ export default function ProfilePage() {
         onSubmit={handleCreateProfile}
         className="flex flex-col items-end p-4 rounded-lg"
       >
-        {/* <img src={Avatar} alt="profilePic" className="rounded-full w-40" />
-        <label>
-          <input
-            type="image"
-            src={Avatar}
-            alt="profilePicture"
-            className="rounded-full w-40"
-          />
-        </label>
-        <label>
-          <input
-            type="file"
-            name="profilePicture"
-            accept="image/*"
-            // onClick={}
-            disabled={disableToggle}
-          /> */}
-        {/* </label> */}
+        <img
+          src={userData ? userData.picture : Avatar}
+          alt="profilePic"
+          className="w-48 mx-auto my-4 rounded-xl"
+        />
+
+        {!disable && (
+          <label>
+            <input
+              type="file"
+              name="profilePicture"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </label>
+        )}
         <label className="m-2 text-xl">
           First Name:
           <input
             type="text"
-            placeholder={userData ? userData.firstName : "First Name"}
+            placeholder={
+              userData
+                ? userData.firstName
+                  ? userData.firstName
+                  : "First Name"
+                : "First Name"
+            }
             name="firstName"
             className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
             value={
               userData
-                ? disableToggle
+                ? disable
                   ? userData.firstName
                   : formData.firstName
                 : formData.firstName
             }
             onChange={handleChange}
-            disabled={disableToggle}
+            disabled={disable}
           />
         </label>
         <label className="m-2 text-xl">
           Surname:
           <input
             type="text"
-            placeholder={userData ? userData.surname : "Surname"}
+            placeholder={
+              userData
+                ? userData.surname
+                  ? userData.surname
+                  : "Surname"
+                : "Surname"
+            }
             name="surname"
             className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
             value={
               userData
-                ? disableToggle
+                ? disable
                   ? userData.surname
                   : formData.surname
                 : formData.surname
             }
             onChange={handleChange}
-            disabled={disableToggle}
+            disabled={disable}
           />
         </label>
         <label className="m-2 text-xl">
           Email:
           <input
             type="email"
-            placeholder={userData ? userData.email : "Email"}
+            placeholder={
+              userData ? (userData.email ? userData.email : "Email") : "Email"
+            }
             name="email"
             className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
             value={
               userData
-                ? disableToggle
+                ? disable
                   ? userData.email
                   : formData.email
                 : formData.email
             }
             onChange={handleChange}
-            disabled={disableToggle}
+            disabled={disable}
           />
         </label>
         <label className="m-2 p-2 text-xl">
           Phone Number:
           <input
             type="tel"
-            placeholder={userData ? userData.phoneNumber : "Phone Number"}
+            placeholder={
+              userData
+                ? userData.phoneNumber
+                  ? userData.phoneNumber
+                  : "Phone Number"
+                : "Phone Number"
+            }
             name="phoneNumber"
             className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
             value={
               userData
-                ? disableToggle
+                ? disable
                   ? userData.phoneNumber
                   : formData.phoneNumber
                 : formData.phoneNumber
             }
             onChange={handleChange}
-            disabled={disableToggle}
+            disabled={disable}
           />
         </label>
         <label className="m-2 text-xl">
@@ -178,14 +218,20 @@ export default function ProfilePage() {
             className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
             value={
               userData
-                ? disableToggle
+                ? disable
                   ? userData.gender
                   : formData.gender
                 : formData.gender
             }
             onChange={handleChange}
-            placeholder={userData ? userData.gender : "Gender"}
-            disabled={disableToggle}
+            placeholder={
+              userData
+                ? userData.gender
+                  ? userData.gender
+                  : "Gender"
+                : "Gender"
+            }
+            disabled={disable}
           />
           <datalist id="genders">
             <option value="Male" />
@@ -198,7 +244,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               className="text-xl m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300"
-              disabled={disableToggle}
+              disabled={disable}
             >
               Save
             </button>
@@ -208,13 +254,13 @@ export default function ProfilePage() {
               type="button"
               className="text-xl m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300 disabled:bg-gray-200"
               onClick={handleUpdateProfile}
-              disabled={disableToggle}
+              disabled={disable}
             >
               Update Profile
             </button>
           )}
 
-          {disableToggle && (
+          {disable && (
             <button
               type="button"
               className="text-xl m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300"

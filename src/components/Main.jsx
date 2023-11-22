@@ -5,6 +5,7 @@ import { useAuth } from "./AuthContext";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { NavLink } from "react-router-dom";
+import Avatar from "../assets/Avatar.jpg";
 
 export default function Main() {
   const [quizData, setQuizData] = useState([]);
@@ -209,7 +210,14 @@ export default function Main() {
   return (
     <div className="mt-12 min-h-screen ">
       <div className="flex justify-end text-sm">
-        <h3>{`Hello ${userData ? userData.firstName : ""}`}</h3>
+        <div className="flex gap-x-5">
+          <h3>{`Hello ${userData ? userData.firstName : ""}`}</h3>
+          <img
+            src={userData ? userData.picture : Avatar}
+            alt="profilePicture"
+            className="rounded-full w-8 h-8"
+          />
+        </div>
         <h2 className="ml-2">
           <Dropdown
             menu={{
