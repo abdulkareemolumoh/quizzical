@@ -19,20 +19,20 @@ export default function ProfilePage() {
   const [profilePicture, setProfilePicture] = React.useState(Avatar);
 
   const handleChange = (e) => {
-    if (!userData) {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    // if (!userData) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // } else {
+    //   setFormData({ ...formData, [e.target.name]: e.target.value });
+    // }
   };
 
   const handleImageChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setProfilePicture(selectedFile);
-    } else {
-      setProfilePicture(userData.picture);
-    }
+    // const selectedFile = e.target.files[0];
+    // if (selectedFile) {
+    setProfilePicture(e.target.files[0] || userData.picture);
+    // } else {
+    //   setProfilePicture(userData.picture);
+    // }
   };
 
   const handleCreateProfile = async (e) => {
@@ -40,7 +40,7 @@ export default function ProfilePage() {
 
     const profileImageRef = ref(
       storage,
-      `profileImages/${profilePicture.name}`
+      `profileImages/${user.uid}/${profilePicture.name}`
     );
     uploadBytes(profileImageRef, profilePicture).then(async (snapshot) => {
       const fullPath = snapshot.metadata.fullPath;
@@ -73,7 +73,7 @@ export default function ProfilePage() {
     if (profilePicture !== userData.picture) {
       const profileImageRef = ref(
         storage,
-        `profileImages/${profilePicture.name}`
+        `profileImages/${user.uid}/${profilePicture.name}`
       );
       await uploadBytes(profileImageRef, profilePicture);
       const fullPath = profileImageRef.fullPath;

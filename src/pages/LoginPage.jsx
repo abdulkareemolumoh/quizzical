@@ -52,7 +52,7 @@ export default function LoginPage() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         login(userCredential.user);
-        navigate("/quiz");
+        navigate("/profilePage");
       })
       .catch((error) => {
         const errorCode = error.code;
