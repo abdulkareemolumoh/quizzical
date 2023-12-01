@@ -126,7 +126,8 @@ export default function ProfilePage() {
     );
   } else {
     recentQuizHistory = Object.entries(userData.quizScoreData.quizScoreHistory)
-      .sort(([, valueA], [, valueB]) => valueB[0] - valueA[0])
+      .sort()
+      .reverse()
       .slice(0, 5)
       .map(([key, value]) => (
         <div key={key} className="m-2">
