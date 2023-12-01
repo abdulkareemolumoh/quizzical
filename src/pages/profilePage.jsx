@@ -97,13 +97,13 @@ export default function ProfilePage() {
   }
 
   // const renderInputField = (label, name, type = "text", placeholder) => (
-  //   <label key={name} className="m-2 text-xl">
+  //   <label key={name} className="m-2 text-sm">
   //     {label}:
   //     <input
   //       type={type}
   //       placeholder={placeholder || label}
   //       name={name}
-  //       className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none"
+  //       className="m-2 p-2 text-sm rounded-md text-black disabled:bg-none disabled:border-none"
   //       value={disable ? (userData ? userData[name] : "") : formData[name]}
   //       onChange={handleChange}
   //       disabled={disable}
@@ -130,8 +130,8 @@ export default function ProfilePage() {
       .reverse()
       .slice(0, 5)
       .map(([key, value]) => (
-        <div key={key} className="m-2">
-          <div className="grid grid-cols-4">
+        <div key={key} className="m-2 text-sm">
+          <div className="grid grid-cols-4 ">
             <p className="m-2 ">{value[0]}</p>
             <p className="m-2 ">{value[2]}</p>
             <p className="m-2">{value[3]}</p>
@@ -159,12 +159,12 @@ export default function ProfilePage() {
       .sort(([, valueA], [, valueB]) => valueB[1] - valueA[1])
       .slice(0, 3)
       .map(([key, value]) => (
-        <div key={key} className="m-2">
-          <div className="grid grid-cols-4">
-            <p className="m-2 ">{value[0]}</p>
-            <p className="m-2 ">{value[2]}</p>
-            <p className="m-2">{value[3]}</p>
-            <p className="m-2">{value[1]}</p>
+        <div key={key} className="m-2 text-sm">
+          <div className="grid grid-cols-4 text-center ">
+            <p className="my-2 ">{value[0]}</p>
+            <p className="my-2 ">{value[2]}</p>
+            <p className="my-2">{value[3]}</p>
+            <p className="my-2">{value[1]}</p>
           </div>
         </div>
       ));
@@ -173,11 +173,11 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen ">
       <h1 className="text-2xl mt-12 mb-4 text-center">Profile</h1>
-      <div className="flex flex-row gap-8">
-        <div className="w-1/2 bg-red-500 rounded-2xl ">
+      <div className="flex flex-col gap-8 my-8">
+        <div className=" bg-red-500 rounded-2xl ">
           <form
             onSubmit={handleCreateProfile}
-            className="flex flex-col items-end p-4 rounded-lg "
+            className="flex flex-col p-4 rounded-lg "
           >
             <img
               src={userData ? userData.picture : Avatar}
@@ -192,10 +192,11 @@ export default function ProfilePage() {
                   name="profilePicture"
                   accept="image/*"
                   onChange={handleImageChange}
+                  className="m-auto w-full rounded-md text-black"
                 />
               </label>
             )}
-            <label className="m-2 text-xl">
+            <label className="m-2 text-sm ">
               First Name:
               <input
                 type="text"
@@ -207,7 +208,7 @@ export default function ProfilePage() {
                     : "First Name"
                 }
                 name="firstName"
-                className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
+                className="m-2 p-2 text-sm w-full rounded-md text-black disabled:bg-none disabled:border-none  "
                 value={
                   userData
                     ? disable
@@ -219,7 +220,7 @@ export default function ProfilePage() {
                 disabled={disable}
               />
             </label>
-            <label className="m-2 text-xl">
+            <label className="m-2 text-sm">
               Surname:
               <input
                 type="text"
@@ -231,7 +232,7 @@ export default function ProfilePage() {
                     : "Surname"
                 }
                 name="surname"
-                className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
+                className="m-2 p-2 text-sm w-full rounded-md text-black disabled:bg-none disabled:border-none  "
                 value={
                   userData
                     ? disable
@@ -243,7 +244,7 @@ export default function ProfilePage() {
                 disabled={disable}
               />
             </label>
-            <label className="m-2 text-xl">
+            <label className="m-2 text-sm">
               Email:
               <input
                 type="email"
@@ -255,7 +256,7 @@ export default function ProfilePage() {
                     : "Email"
                 }
                 name="email"
-                className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
+                className="m-2 p-2 text-sm w-full rounded-md text-black disabled:bg-none disabled:border-none  "
                 value={
                   userData
                     ? disable
@@ -267,7 +268,7 @@ export default function ProfilePage() {
                 disabled={disable}
               />
             </label>
-            <label className="m-2 p-2 text-xl">
+            <label className="m-2 p-2 text-sm">
               Phone Number:
               <input
                 type="tel"
@@ -279,7 +280,7 @@ export default function ProfilePage() {
                     : "Phone Number"
                 }
                 name="phoneNumber"
-                className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
+                className="m-2 p-2 text-sm w-full rounded-md text-black disabled:bg-none disabled:border-none  "
                 value={
                   userData
                     ? disable
@@ -291,12 +292,12 @@ export default function ProfilePage() {
                 disabled={disable}
               />
             </label>
-            <label className="m-2 text-xl">
+            <label className="m-2 text-sm">
               Gender:
               <input
                 list="genders"
                 name="gender"
-                className="m-2 p-2 text-xl rounded-md text-black disabled:bg-none disabled:border-none "
+                className="m-2 p-2 text-sm w-full rounded-md text-black disabled:bg-none disabled:border-none  "
                 value={
                   userData
                     ? disable
@@ -324,7 +325,7 @@ export default function ProfilePage() {
               {!userData && (
                 <button
                   type="submit"
-                  className="text-xl m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300"
+                  className="text-sm m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300"
                   disabled={disable}
                 >
                   Save
@@ -333,7 +334,7 @@ export default function ProfilePage() {
               {userData && !disable && (
                 <button
                   type="button"
-                  className="text-xl m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300 disabled:bg-gray-200"
+                  className="text-sm m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300 disabled:bg-gray-200"
                   onClick={handleUpdateProfile}
                   disabled={disable}
                 >
@@ -344,7 +345,7 @@ export default function ProfilePage() {
               {disable && (
                 <button
                   type="button"
-                  className="text-xl m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300"
+                  className="text-sm m-1 bg-gray-500 mx-auto px-2 py-1 rounded-lg hover:bg-gray-300"
                   onClick={handleEditProfile}
                 >
                   Edit
@@ -353,7 +354,7 @@ export default function ProfilePage() {
             </div>
           </form>
         </div>
-        <div className="flex flex-col w-1/2 gap-8">
+        <div className="flex flex-col  gap-8">
           <div className="h-1/2  bg-red-300 rounded-2xl">
             <h1 className="text-center mt-4"> SCOREBOARD</h1>
             <h2 className="text-center ">History</h2>
