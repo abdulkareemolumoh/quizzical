@@ -17,16 +17,19 @@ export function AuthProvider({ children }) {
         const docRef = doc(db, "userData", user.uid);
         try {
           const docSnap = await getDoc(docRef);
-          const userData = docSnap.exists() ? docSnap.data() : null;
-          setUserData(userData);
+          const fetchedUserData = docSnap.exists() ? docSnap.data() : null;
+          setUserData(fetchedUserData);
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
       }
     };
 
-    fetchUserData();
-  }, [loggedIn, user]);
+    // Fetch user data only if userData is not already set
+    if (!userData) {
+      fetchUserData();
+    }
+  }, [loggedIn, user, userData]);
 
   async function login(user) {
     setLoggedIn(true);

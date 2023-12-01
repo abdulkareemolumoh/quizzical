@@ -6,6 +6,8 @@ import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { NavLink } from "react-router-dom";
 import Avatar from "../assets/Avatar.jpg";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { db } from "./Firebase";
 
 export default function Main() {
   const [quizData, setQuizData] = useState([]);
@@ -17,7 +19,7 @@ export default function Main() {
   const [difficultyLevel, setDifficultyLevel] = useState();
   const [selectCounter, setSelectCounter] = useState(0);
 
-  const { logout, userData } = useAuth();
+  const { logout, userData, user } = useAuth();
 
   function handleSelectedOption(selected, correctAnswer, index) {
     setQuizData((prevData) => {
@@ -60,14 +62,35 @@ export default function Main() {
     }
   }
 
-  function handleCheckAnswer() {
+  function getFormattedDate() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0
+
+    const yyyy = today.getFullYear();
+
+    const hh = String(today.getHours()).padStart(2, "0");
+    const min = String(today.getMinutes()).padStart(2, "0");
+    const ss = String(today.getSeconds()).padStart(2, "0");
+
+    const formattedDate = `${dd}-${mm}-${yyyy} ${hh}:${min}:${ss}`;
+    return formattedDate;
+  }
+
+  const formattedDate = getFormattedDate();
+
+  async function handleCheckAnswer() {
+    let newScore = score;
     if (selectCounter === quizData.length) {
       for (let i = 0; i < quizData.length; i++) {
         if (quizData[i].correct) {
-          setScore((prevScore) => prevScore + 1);
+          newScore = newScore + 1;
         }
       }
+
+      setScore(newScore);
       setShowResults(true);
+
       setStartQuiz((prevState) => !prevState);
     } else {
       alert(
@@ -76,17 +99,6 @@ export default function Main() {
         } unanswered questions`
       );
     }
-  }
-
-  function restartGame() {
-    setQuizData([]);
-    setStartQuiz(false);
-    setShowResults(false);
-    setScore(0);
-    setAnsweredQuestions([]);
-    setDifficultyLevel();
-    setQuizCategory();
-    setSelectCounter(0);
   }
 
   const categoryMap = {
@@ -103,6 +115,31 @@ export default function Main() {
     28: "Vehicles",
     30: "Science: Gadgets",
   };
+
+  if (showResults) {
+    updateDoc(doc(db, "userData", user.uid), {
+      "quizScoreData.quizScore": score,
+      "quizScoreData.quizCategory": categoryMap[quizCategory],
+      "quizScoreData.quizDifficulty": difficultyLevel,
+      [`quizScoreData.quizScoreHistory.${formattedDate}`]: arrayUnion(
+        formattedDate,
+        score,
+        categoryMap[quizCategory],
+        difficultyLevel
+      ),
+    });
+  }
+
+  function restartGame() {
+    setQuizData([]);
+    setStartQuiz(false);
+    setShowResults(false);
+    setScore(0);
+    setAnsweredQuestions([]);
+    setDifficultyLevel(difficultyLevel);
+    setQuizCategory(quizCategory);
+    setSelectCounter(0);
+  }
 
   const categoryButtons = Object.entries(categoryMap).map(([key, value]) => (
     <button
