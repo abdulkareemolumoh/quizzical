@@ -2,14 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "antd";
 
-// const contentStyle = {
-//   // height: "20rem",
-//   // color: "#fff",
-//   // lineHeight: "20rem",
-//   // textAlign: "center",
-//   // background: "#364d79",
-// };
-
 export default function HomePage() {
   return (
     <div className="homepage py-4">

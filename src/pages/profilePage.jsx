@@ -1,7 +1,7 @@
 import { Timestamp, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { db, storage } from "../components/Firebase";
-import { useAuth } from "../components/AuthContext";
+import { db, storage } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import Avatar from "../assets/Avatar.jpg";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Spin } from "antd";
@@ -132,10 +132,10 @@ export default function ProfilePage() {
       .map(([key, value]) => (
         <div key={key} className="m-2 text-sm">
           <div className="grid grid-cols-4 ">
-            <p className="m-2 ">{value[0]}</p>
-            <p className="m-2 ">{value[2]}</p>
-            <p className="m-2">{value[3]}</p>
-            <p className="m-2">{value[1]}</p>
+            <p className="p-2  ">{value[0]}</p>
+            <p className="p-2 mx-auto ">{value[2]}</p>
+            <p className="p-2 mx-auto">{value[3]}</p>
+            <p className="p-2 mx-auto ">{value[1]}</p>
           </div>
         </div>
       ));
@@ -173,8 +173,8 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen ">
       <h1 className="text-2xl mt-12 mb-4 text-center">Profile</h1>
-      <div className="flex flex-col gap-8 my-8">
-        <div className=" bg-red-500 rounded-2xl ">
+      <div className="flex flex-col sm:flex-row gap-8 my-8">
+        <div className=" bg-blue-500 rounded-2xl sm:w-1/2 ">
           <form
             onSubmit={handleCreateProfile}
             className="flex flex-col p-4 rounded-lg "
@@ -354,13 +354,13 @@ export default function ProfilePage() {
             </div>
           </form>
         </div>
-        <div className="flex flex-col  gap-8">
-          <div className="h-1/2  bg-red-300 rounded-2xl">
+        <div className="flex flex-col  gap-8 sm:w-1/2">
+          <div className="h-1/2  bg-blue-300 rounded-2xl ">
             <h1 className="text-center mt-4"> SCOREBOARD</h1>
             <h2 className="text-center ">History</h2>
             {recentQuizHistory}
           </div>
-          <div className="h-1/2 bg-red-300 rounded-2xl">
+          <div className="h-1/2 bg-blue-300 rounded-2xl">
             <h1 className="text-center mt-4"> Top Score</h1>
             {scoreRank}
             {/* {[

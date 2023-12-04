@@ -1,8 +1,8 @@
 import React from "react";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
-import { useTheme } from "../components/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Layout() {
   const { darkMode } = useTheme();

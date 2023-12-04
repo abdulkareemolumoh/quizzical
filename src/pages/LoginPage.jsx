@@ -5,8 +5,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../components/Firebase";
-import { useAuth } from "../components/AuthContext";
+import { auth } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 
@@ -57,7 +57,8 @@ export default function LoginPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        message.error(errorMessage);
+        console.log(errorCode);
       });
   }
 
@@ -72,6 +73,7 @@ export default function LoginPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        message.error(errorMessage);
         console.log(errorCode, errorMessage);
       });
   }

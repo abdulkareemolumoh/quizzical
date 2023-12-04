@@ -8,10 +8,10 @@ import {
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import Quiz from "./pages/Quiz";
-import { ThemeProvider } from "./components/ThemeContext";
-import { AuthProvider } from "./components/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import QuizLayout from "./pages/QuizLayout";
-import ErrorElement from "./pages/Error";
+import ErrorElement from "./components/Error";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/profilePage"
 function App() {
